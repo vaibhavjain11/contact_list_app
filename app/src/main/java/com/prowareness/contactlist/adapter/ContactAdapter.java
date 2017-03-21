@@ -30,7 +30,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     private final Context mContext;
     private List<ContactList.Contact> mList;
-    public ContactAdapter(Context context, List<ContactList.Contact> list){
+
+    public ContactAdapter(Context context, List<ContactList.Contact> list) {
         this.mContext = context;
         this.mList = list;
         App.getComponent().inject(this);
@@ -39,7 +40,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_contact,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_contact, parent, false);
         return new ContactViewHolder(view);
     }
 
@@ -51,17 +52,17 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                Set<String> set = sharedPreferences.getStringSet("deletedList",null);
-                if(set == null){
+                Set<String> set = sharedPreferences.getStringSet("deletedList", null);
+                if (set == null) {
                     set = new HashSet<String>();
                 }
                 ArrayList<String> list = new ArrayList<String>(set);
                 list.add(mList.get(position).getUid());
-                editor.putStringSet("deletedList",new HashSet<String>(list));
+                editor.putStringSet("deletedList", new HashSet<String>(list));
                 editor.commit();
                 mList.remove(position);
                 notifyItemRemoved(position);
-                notifyItemRangeChanged(position,mList.size());
+                notifyItemRangeChanged(position, mList.size());
             }
         });
 
@@ -72,7 +73,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         return this.mList.size();
     }
 
-    public static class ContactViewHolder extends RecyclerView.ViewHolder{
+    public static class ContactViewHolder extends RecyclerView.ViewHolder {
 
         public TextView mNameTextView;
         public TextView mDeleteContact;
@@ -80,9 +81,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         public ContactViewHolder(View itemView) {
             super(itemView);
 
-
             mNameTextView = (TextView) itemView.findViewById(R.id.name);
-            mDeleteContact = (TextView)itemView.findViewById(R.id.deleteContact);
+            mDeleteContact = (TextView) itemView.findViewById(R.id.deleteContact);
         }
     }
 }

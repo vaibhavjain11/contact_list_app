@@ -21,7 +21,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by vaibhavjain on 21/3/17.
  */
 
-public class ContactActivityPersenter{
+public class ContactActivityPersenter {
 
     @Inject
     SharedPreferences sharedPreferences;
@@ -30,7 +30,7 @@ public class ContactActivityPersenter{
     private final HashMap hashMap;
     private CompositeSubscription subscriptions;
 
-    public ContactActivityPersenter(RxService service, PresenterInterface view, HashMap map){
+    public ContactActivityPersenter(RxService service, PresenterInterface view, HashMap map) {
         this.service = service;
         this.view = view;
         this.hashMap = map;
@@ -38,7 +38,7 @@ public class ContactActivityPersenter{
         App.getComponent().inject(this);
     }
 
-    public void getContactList(){
+    public void getContactList() {
         view.showWait();
 
         Subscription subscription = service.getContactList(hashMap, new RxService.GetContactListCallback() {
@@ -47,13 +47,13 @@ public class ContactActivityPersenter{
             public void onSuccess(ContactList contactList) {
                 view.removeWait();
 
-                Set<String> set = sharedPreferences.getStringSet("deletedList",null);
+                Set<String> set = sharedPreferences.getStringSet("deletedList", null);
 
-                if(set!=null){
+                if (set != null) {
                     ListIterator<ContactList.Contact> iterator = contactList.getResult().listIterator();
-                    while(iterator.hasNext()){
-                        ContactList.Contact contact= iterator.next();
-                        if(set.contains(contact.getUid())){
+                    while (iterator.hasNext()) {
+                        ContactList.Contact contact = iterator.next();
+                        if (set.contains(contact.getUid())) {
                             iterator.remove();
                         }
                     }
@@ -72,7 +72,7 @@ public class ContactActivityPersenter{
         subscriptions.add(subscription);
     }
 
-    public void onStop(){
+    public void onStop() {
         subscriptions.unsubscribe();
     }
 

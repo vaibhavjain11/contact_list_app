@@ -22,11 +22,11 @@ public class RxService {
 
     private final RestService contactListService;
 
-    public RxService(RestService service){
+    public RxService(RestService service) {
         contactListService = service;
     }
 
-    public Subscription getContactList(final HashMap hashMap,final GetContactListCallback callback){
+    public Subscription getContactList(final HashMap hashMap, final GetContactListCallback callback) {
 
         return contactListService.getContactList(hashMap)
                 .subscribeOn(Schedulers.io())
@@ -56,8 +56,9 @@ public class RxService {
                 });
     }
 
-    public interface GetContactListCallback{
+    public interface GetContactListCallback {
         void onSuccess(ContactList contactList);
+
         void onError(NetworkErrorException e);
     }
 }

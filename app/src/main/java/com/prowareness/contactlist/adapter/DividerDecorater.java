@@ -18,11 +18,10 @@ public class DividerDecorater extends RecyclerView.ItemDecoration {
             android.R.attr.listDivider
     };
 
-    public DividerDecorater(Context context){
+    public DividerDecorater(Context context) {
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDivider = a.getDrawable(0);
         a.recycle();
-      //  setOrientation(orientation);
 
     }
 
